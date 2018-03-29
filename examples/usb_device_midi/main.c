@@ -582,7 +582,7 @@ main()
 				printf("R=%d, %02x %02x %02x %02x\r\n", USBByteCount, Receive_Midi_Buf[0], Receive_Midi_Buf[1], Receive_Midi_Buf[2], Receive_Midi_Buf[3]);
 				#endif
 				
-				UEP2_CTRL = UEP2_CTRL & ~ MASK_UEP_R_RES | UEP_R_RES_ACK;
+				//UEP2_CTRL = UEP2_CTRL & ~ MASK_UEP_R_RES | UEP_R_RES_ACK;
 				length = USBByteCount;
 				USBByteCount = 0;
 
@@ -607,6 +607,7 @@ main()
 						memcpy(Ep2Buffer+MAX_PACKET_SIZE, Receive_Midi_Buf, length); //环回MIDI设备
 						UEP2_T_LEN = length;								//预使用发送长度一定要清空
 						UEP2_CTRL = UEP2_CTRL & ~ MASK_UEP_T_RES | UEP_T_RES_ACK;			//应答ACK
+						UEP2_CTRL = UEP2_CTRL & ~ MASK_UEP_R_RES | UEP_R_RES_ACK;			//收到ACK
 						UpPoint2_Busy = 1;
 						length = 0;
 					//}
